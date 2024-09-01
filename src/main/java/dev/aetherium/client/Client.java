@@ -1,5 +1,6 @@
 package dev.aetherium.client;
 
+import dev.aetherium.client.ui.MainClickGui;
 import dev.aetherium.system.event.EventManager;
 import dev.aetherium.system.module.ModuleManager;
 import lombok.Getter;
@@ -15,11 +16,17 @@ public class Client {
     @Getter
     private static ModuleManager moduleManager;
 
+    //ClickGuis
+    @Getter private static MainClickGui mainClickGui;
+
     public static void onLaunch() {
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
 
+        mainClickGui = new MainClickGui();
+
         moduleManager.onInitialize();
+
     }
 
     public static void onShutdown() {

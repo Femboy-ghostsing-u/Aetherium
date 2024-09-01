@@ -9,9 +9,7 @@ import dev.aetherium.system.module.ModuleInterface;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @ModuleInterface(moduleName = "Interface", description = "Interface of your enabled modules, cords and MORE!", category = Category.VISUAL, keybind = Keyboard.KEY_N)
 public class Interface extends Module {
