@@ -5,6 +5,7 @@ import dev.aetherium.client.module.visual.ClickGui;
 import dev.aetherium.client.module.visual.Interface;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,5 +41,9 @@ public class ModuleManager {
 
     public List<Module> getEnabledModules() {
         return modulesMap.values().stream().filter(Module::isEnabled).collect(Collectors.toList());
+    }
+
+    public List<Module> getModulesList() {
+        return new ArrayList<>(modulesMap.values());
     }
 }
