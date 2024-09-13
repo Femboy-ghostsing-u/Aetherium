@@ -17,6 +17,10 @@ public class Interface extends Module {
 
     @Override
     public void onEnable() {
+        ScaledResolution scaledResolution = new ScaledResolution(mc);
+        Client.getModuleManager().getModulesList().forEach(module -> {
+            module.getTranslate().setX(scaledResolution.getScaledWidth() + 2);
+        });
         super.onEnable();
     }
 

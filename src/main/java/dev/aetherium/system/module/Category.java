@@ -14,5 +14,7 @@ public enum Category {
     private char categoryIcon;
 
     Category(String categoryName, char a) {
+        this.categoryName = categoryName;
+        this.categoryIcon = a;
     }
 }
