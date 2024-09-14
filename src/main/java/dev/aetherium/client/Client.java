@@ -22,10 +22,10 @@ public class Client {
     public static void onLaunch() {
         eventManager = new EventManager();
         moduleManager = new ModuleManager();
+        moduleManager.onInitialize();
 
         mainClickGui = new MainClickGui();
 
-        moduleManager.onInitialize();
 
     }
 

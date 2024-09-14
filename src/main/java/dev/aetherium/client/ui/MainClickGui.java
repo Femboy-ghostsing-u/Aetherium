@@ -1,7 +1,7 @@
 package dev.aetherium.client.ui;
 
-import dev.aetherium.client.utilities.AnimationUtil;
-import dev.aetherium.client.utilities.Translate;
+import dev.aetherium.client.Client;
+import dev.aetherium.client.utilities.RenderUtil;
 import dev.aetherium.system.module.Category;
 import dev.aetherium.system.module.Module;
 import net.minecraft.client.gui.GuiScreen;
@@ -71,26 +71,43 @@ public class MainClickGui extends GuiScreen {
     private class CategoryUI {
 
         private final Category category;
-        private double posX, posY, dragX, dragY, width, height;
-        private final double finalWidth, finalHeight;
+        private double posX;
+        private double posY;
+        private double dragX;
+        private double dragY;
+        private final double width;
+        private final double height;
         private boolean dragging;
-        private Translate translate = new Translate(posX, 0);
+        private final List<ModuleUI> moduleUIS = new ArrayList<>();
+        private boolean extendModules;
 
         public CategoryUI(Category category, int width, int height, int inc) {
             this.category = category;
             dragging = false;
             posX = 15 + inc;
             posY = 15;
-            this.finalWidth = width;
-            this.finalHeight = height;
+            this.width = width;
+            this.height = height;
+            extendModules = false;
+
+            int increment = 25;
+            for (Module module : Client.getModuleManager().getModulesByCategory(category)) {
+                moduleUIS.add(new ModuleUI(module, increment));
+                increment += 25;
+            }
         }
 
         public void clicked(int mouseX, int mouseY, int button) {
-            if (isHover2(mouseX, mouseY, posX, posY, finalWidth, finalHeight) && button == 0) {
+            if (isHover2(mouseX, mouseY, posX, posY, width, height) && button == 0) {
                 this.dragging = true;
                 this.dragX = mouseX - posX;
                 this.dragY = mouseY - posY;
+            } else if (isHover2(mouseX, mouseY, posX, posY, width, height) && button == 1) {
+                extendModules = !extendModules;
             }
+
+            if (extendModules)
+                moduleUIS.forEach(moduleUI -> moduleUI.click(mouseX, mouseY, button));
         }
 
         public void release() {
@@ -102,22 +119,15 @@ public class MainClickGui extends GuiScreen {
                 posX = mouseX - dragX;
                 posY = mouseY - dragY;
             }
-            translate.animate(posX, posY, 1, AnimationUtil.InterpolationType.PROGRESSIVE);
 
-            width = translate.getX() + finalWidth;
-            height = translate.getY() + finalHeight;
+            RenderUtil.renderRect(posX, posY, width, height, Color.pink);
+            mc.fontRendererObj.drawStringWithShadow(category.getCategoryName(), (float) (posX + (width / 2) - 15), (float) (posY + (height / 2) - 5), -1);
 
-            double drawPosX = translate.getX();
-            double drawPosY = translate.getY();
-
-            drawRect(drawPosX, drawPosY, width, height, Color.pink.getRGB());
-            mc.fontRendererObj.drawStringWithShadow(category.getCategoryName(), (float) (drawPosX + (finalWidth / 2) - 15), (float) (drawPosY + (finalHeight / 2) - 5), -1);
-
-
+            if (extendModules)
+                moduleUIS.forEach(moduleUI -> moduleUI.draw(mouseX, mouseY, partialTicks));
         }
 
         public void close() {
-            translate = new Translate(posX, (double) mc.displayHeight / 2);
             dragging = false;
         }
 
@@ -125,13 +135,26 @@ public class MainClickGui extends GuiScreen {
             private final Module module;
 
             boolean extended = false;
+            private int incrementY;
 
-            private ModuleUI(Module module) {
+            private ModuleUI(Module module, int incrementY) {
                 this.module = module;
+                this.incrementY = incrementY;
             }
 
             public void draw(int mouseX, int mouseY, float partialTicks) {
+                Color enabledColor = module.isEnabled() ? Color.pink : Color.gray;
+                RenderUtil.renderRect(posX, posY + incrementY, width, height, enabledColor);
 
+                mc.fontRendererObj.drawStringWithShadow(module.getName(), (float) posX, (float) (posY + incrementY), -1);
+            }
+
+            public void click(int mouseX, int mouseY, int button) {
+                if (isHover2(mouseX, mouseY, posX, posY + incrementY, width, height) && button == 0) {
+                    module.toggleModule();
+                } else if (isHover2(mouseX, mouseY, posX, posY + incrementY, width, height) && button == 1) {
+                    extended = !extended;
+                }
             }
         }
     }
