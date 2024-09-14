@@ -4,6 +4,8 @@ import dev.aetherium.client.Client;
 import dev.aetherium.client.utilities.RenderUtil;
 import dev.aetherium.system.module.Category;
 import dev.aetherium.system.module.Module;
+import dev.aetherium.system.setting.Setting;
+import dev.aetherium.system.setting.impl.BooleanSetting;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.awt.*;
@@ -124,7 +126,9 @@ public class MainClickGui extends GuiScreen {
             mc.fontRendererObj.drawStringWithShadow(category.getCategoryName(), (float) (posX + (width / 2) - 15), (float) (posY + (height / 2) - 5), -1);
 
             if (extendModules)
-                moduleUIS.forEach(moduleUI -> moduleUI.draw(mouseX, mouseY, partialTicks));
+                moduleUIS.forEach(moduleUI -> {
+                    moduleUI.draw(mouseX, mouseY, partialTicks);
+                });
         }
 
         public void close() {
@@ -134,7 +138,7 @@ public class MainClickGui extends GuiScreen {
         private class ModuleUI {
             private final Module module;
 
-            boolean extended = false;
+            boolean extendSettings = false;
             private int incrementY;
 
             private ModuleUI(Module module, int incrementY) {
@@ -147,13 +151,26 @@ public class MainClickGui extends GuiScreen {
                 RenderUtil.renderRect(posX, posY + incrementY, width, height, enabledColor);
 
                 mc.fontRendererObj.drawStringWithShadow(module.getName(), (float) posX, (float) (posY + incrementY), -1);
+
+                if (extendSettings) {
+                    int settingY = 25;
+                    for (Setting moduleSetting : module.getSettingsList()) {
+                        if (moduleSetting instanceof BooleanSetting) {
+                            double positionY = (posY + incrementY) + settingY;
+                            RenderUtil.renderRect(posX, positionY, width, height, enabledColor);
+                            mc.fontRendererObj.drawStringWithShadow(moduleSetting.name, (float) posX, (float) (positionY), -1);
+                            settingY += 15;
+                        }
+                    }
+
+                }
             }
 
             public void click(int mouseX, int mouseY, int button) {
                 if (isHover2(mouseX, mouseY, posX, posY + incrementY, width, height) && button == 0) {
                     module.toggleModule();
                 } else if (isHover2(mouseX, mouseY, posX, posY + incrementY, width, height) && button == 1) {
-                    extended = !extended;
+                    extendSettings = !extendSettings;
                 }
             }
         }

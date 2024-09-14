@@ -2,8 +2,13 @@ package dev.aetherium.system.module;
 
 import dev.aetherium.client.Client;
 import dev.aetherium.client.utilities.Translate;
+import dev.aetherium.system.setting.Setting;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 public class Module {
@@ -15,7 +20,8 @@ public class Module {
     private final int key;
     private final Category category;
     private boolean enabled;
-    private Translate translate;
+    private final Translate translate;
+    private List<Setting> settingsList;
 
     public Module() {
         name = getClass().getAnnotation(ModuleInterface.class).moduleName();
@@ -23,6 +29,7 @@ public class Module {
         key = getClass().getAnnotation(ModuleInterface.class).keybind();
         category = getClass().getAnnotation(ModuleInterface.class).category();
         translate = new Translate(0, 0);
+        settingsList = new ArrayList<>();
     }
 
     public void onEnable() {
@@ -48,5 +55,9 @@ public class Module {
 
     public float getY() {
         return (float) translate.getY();
+    }
+
+    public void addSettings(Setting... settings) {
+        settingsList = new ArrayList<>(Arrays.asList(settings));
     }
 }

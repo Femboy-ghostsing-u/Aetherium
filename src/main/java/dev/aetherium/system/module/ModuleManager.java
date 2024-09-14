@@ -1,6 +1,7 @@
 package dev.aetherium.system.module;
 
 import dev.aetherium.client.module.movement.AutoSprint;
+import dev.aetherium.client.module.movement.Speed;
 import dev.aetherium.client.module.visual.ClickGui;
 import dev.aetherium.client.module.visual.Interface;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class ModuleManager {
         addModule(new Interface());
         addModule(new AutoSprint());
         addModule(new ClickGui());
+        addModule(new Speed());
     }
 
     private void addModule(Module module) {
