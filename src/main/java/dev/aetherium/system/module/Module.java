@@ -60,4 +60,8 @@ public class Module {
     public void addSettings(Setting... settings) {
         settingsList = new ArrayList<>(Arrays.asList(settings));
     }
+
+    public boolean EmptySettings() {
+        return settingsList.isEmpty();
+    }
 }
