@@ -126,9 +126,7 @@ public class MainClickGui extends GuiScreen {
             mc.fontRendererObj.drawStringWithShadow(category.getCategoryName(), (float) (posX + (width / 2) - 15), (float) (posY + (height / 2) - 5), -1);
 
             if (extendModules)
-                moduleUIS.forEach(moduleUI -> {
-                    moduleUI.draw(mouseX, mouseY, partialTicks);
-                });
+                moduleUIS.forEach(moduleUI -> moduleUI.draw(mouseX, mouseY, partialTicks));
         }
 
         public void close() {
@@ -152,18 +150,6 @@ public class MainClickGui extends GuiScreen {
 
                 mc.fontRendererObj.drawStringWithShadow(module.getName(), (float) posX, (float) (posY + incrementY), -1);
 
-                if (extendSettings) {
-                    int settingY = 25;
-                    for (Setting moduleSetting : module.getSettingsList()) {
-                        if (moduleSetting instanceof BooleanSetting) {
-                            double positionY = (posY + incrementY) + settingY;
-                            RenderUtil.renderRect(posX, positionY, width, height, enabledColor);
-                            mc.fontRendererObj.drawStringWithShadow(moduleSetting.name, (float) posX, (float) (positionY), -1);
-                            settingY += 15;
-                        }
-                    }
-
-                }
             }
 
             public void click(int mouseX, int mouseY, int button) {
