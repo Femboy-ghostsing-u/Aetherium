@@ -2,9 +2,9 @@ package dev.aetherium.client.module.visual;
 
 import dev.aetherium.client.Client;
 import dev.aetherium.client.event.render.Render2DEvent;
-import dev.aetherium.client.utilities.AnimationUtil;
+import dev.aetherium.system.utilities.AnimationUtil;
 import dev.aetherium.system.event.SubscribeEvent;
-import dev.aetherium.system.module.Category;
+import dev.aetherium.system.module.ModuleCategory;
 import dev.aetherium.system.module.Module;
 import dev.aetherium.system.module.ModuleInterface;
 import net.minecraft.client.gui.ScaledResolution;
@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.List;
 
-@ModuleInterface(moduleName = "Interface", description = "Interface of your enabled modules, cords and MORE!", category = Category.VISUAL, keybind = Keyboard.KEY_N)
+@ModuleInterface(moduleName = "Interface", description = "Interface of your enabled modules, cords and MORE!", category = ModuleCategory.VISUAL, keybind = Keyboard.KEY_N)
 public class Interface extends Module {
 
     @Override

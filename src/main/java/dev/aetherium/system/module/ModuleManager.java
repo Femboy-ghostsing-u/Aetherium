@@ -49,7 +49,7 @@ public class ModuleManager {
         return new ArrayList<>(modulesMap.values());
     }
 
-    public List<Module> getModulesByCategory(Category category) {
+    public List<Module> getModulesByCategory(ModuleCategory category) {
         return modulesMap.values().stream().filter(module -> module.getCategory() == category).collect(Collectors.toList());
     }
 }

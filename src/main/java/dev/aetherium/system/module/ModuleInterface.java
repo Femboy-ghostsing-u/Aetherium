@@ -1,7 +1,5 @@
 package dev.aetherium.system.module;
 
-import org.lwjgl.input.Keyboard;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -11,5 +9,5 @@ public @interface ModuleInterface {
     String moduleName();
     String description();
     int keybind() default 0;
-    Category category();
+    ModuleCategory category();
 }

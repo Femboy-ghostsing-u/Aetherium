@@ -1,4 +1,4 @@
-package dev.aetherium.client.utilities;
+package dev.aetherium.system.utilities;
 
 import net.minecraft.client.Minecraft;
 

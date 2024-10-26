@@ -1,16 +1,17 @@
 package dev.aetherium.system.module;
 
 import dev.aetherium.client.Client;
-import dev.aetherium.client.utilities.Translate;
+import dev.aetherium.system.utilities.Translate;
 import dev.aetherium.system.setting.Setting;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.client.Minecraft;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Getter
+@Getter @Setter
 public class Module {
 
     protected Minecraft mc = Minecraft.getMinecraft();
@@ -18,10 +19,11 @@ public class Module {
     private final String name;
     private final String description;
     private final int key;
-    private final Category category;
+    private final ModuleCategory category;
     private boolean enabled;
     private final Translate translate;
     private List<Setting> settingsList;
+    private boolean extendSettings;
 
     public Module() {
         name = getClass().getAnnotation(ModuleInterface.class).moduleName();

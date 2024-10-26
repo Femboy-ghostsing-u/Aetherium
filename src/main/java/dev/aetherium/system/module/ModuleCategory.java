@@ -3,7 +3,7 @@ package dev.aetherium.system.module;
 import lombok.Getter;
 
 @Getter
-public enum Category {
+public enum ModuleCategory {
 
     COMBAT("Combat", 'd'),
     MOVEMENT("Movement", 'a'),
@@ -13,7 +13,7 @@ public enum Category {
     private String categoryName;
     private char categoryIcon;
 
-    Category(String categoryName, char a) {
+    ModuleCategory(String categoryName, char a) {
         this.categoryName = categoryName;
         this.categoryIcon = a;
     }
